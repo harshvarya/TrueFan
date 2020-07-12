@@ -1,0 +1,7 @@
+userId,activity,details
+1,sing,tera suroor
+1,dance,everybody dance on the floor
+1,play,football
+2,cook,ver biryani
+2,paint,picaso
+3,paint,picaso
