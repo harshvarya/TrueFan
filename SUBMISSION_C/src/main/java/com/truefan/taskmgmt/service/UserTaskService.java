@@ -75,6 +75,29 @@ public class UserTaskService {
         throw new UserNotCreatedException("No user exists for id " + userId);
     }
 
+    public void updateTask(Long oldUserId, Long newUserId, Long taskId) throws UserNotCreatedException, TaskNotCreatedException {
+        Optional<User> opUserOld = userRepo.findById(oldUserId);
+        if (!opUserOld.isPresent()) {
+            throw new UserNotCreatedException("No user exists for id " + oldUserId);
+        }
+        Optional<User> opUserNew = userRepo.findById(newUserId);
+        if (!opUserNew.isPresent()) {
+            throw new UserNotCreatedException("No user exists for id " + newUserId);
+        }
+        Optional<Task> opTask = taskRepo.findById(taskId);
+        if (!opTask.isPresent()) {
+            throw new TaskNotCreatedException("No Task exists for id " + taskId);
+        }
+
+        User oldUser = opUserOld.get();
+        oldUser.getTasks().remove(taskId);
+        User newUser = opUserNew.get();
+        newUser.getTasks().add(taskId);
+
+        userRepo.save(newUser);
+        userRepo.save(oldUser);
+    }
+
     public List<Task> getAssignedTasks(Long userId) throws UserNotCreatedException {
         Optional<User> opUser = userRepo.findById(userId);
         if (opUser.isPresent()) {
