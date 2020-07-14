@@ -46,7 +46,8 @@
             }
         }
     --------------------------------------------------------------
-    POST : http://localhost:7070/taskmgmt/assign_task/1/1
+    POST : http://localhost:7070/taskmgmt/assign_task/<taskId>/<userId>
+            http://localhost:7070/taskmgmt/assign_task/1/1
     Request Body : keep it empty
     Response : 
         {
@@ -88,6 +89,15 @@
                     "taskType": "cook"
                 }
             ]
+        }
+    --------------------------------------------------------------
+    POST : http://localhost:7070/taskmgmt/update_task/<taskId>/<oldUserId to whom task was assigned>/<newUserId to whom task has to assign>
+            http://localhost:7070/taskmgmt/update_task/2/1/2
+    Request Body : keep it empty
+    Response : 
+        {
+            "operation": "ASSIGN_TASK",
+            "output": "Task 2 assigned to User 2",
         }
     
     
