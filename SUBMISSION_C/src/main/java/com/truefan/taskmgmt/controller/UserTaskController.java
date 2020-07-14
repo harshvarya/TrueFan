@@ -83,6 +83,21 @@ public class UserTaskController {
         return responseDto;
     }
 
+
+    @PostMapping("update_task/{taskId}/{oldUserId}/{newUserId}")
+    public ResponseDto updateTask(@PathVariable("taskId") Long taskId, @PathVariable("oldUserId") Long oldUserId, @PathVariable("newUserId") Long newUserId) {
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setOperation(OperationType.ASSIGN_TASK.getType());
+        try {
+            userTaskService.updateTask(oldUserId, newUserId, taskId);
+            responseDto.setOutput( "Task "+taskId + " assigned to User " + newUserId);
+
+        } catch (UserNotCreatedException | TaskNotCreatedException ex) {
+            responseDto.setOutput("Error in Task assigning : " + ex.getMessage());
+        }
+        return responseDto;
+    }
+
     @GetMapping("tasks/assignee/{userId}")
     public ResponseDto getAssignedTasks(@PathVariable("userId") Long userId) {
         ResponseDto responseDto = new ResponseDto();
